@@ -12,8 +12,7 @@ export default defineConfig({
         target: 'https://song-api-6fpu.onrender.com',
         changeOrigin: true,
         secure: true,
-        //add
-        rewrite: (path) => path.replace(/^\/laxamana/, ''),
+
       },
     },
   },
