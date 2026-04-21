@@ -1,10 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
-  PlayArrowOutlined,
-  PauseOutlined,
-  FullscreenOutlined,
-  VolumeUpOutlined,
-  VolumeOffOutlined,
   CloseOutlined,
   MusicNoteOutlined,
 } from '@mui/icons-material';
