@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PlayCircleOutlined } from '@mui/icons-material';
 import MusicNoteOutlined from '@mui/icons-material/MusicNoteOutlined';
+import { useTheme } from '../context/ThemeContext';
 
 // Generate a gradient background based on song title
 const generateGradientColor = (title) => {
@@ -32,7 +33,6 @@ const getYouTubeVideoId = (url) => {
 const getYouTubeThumbnail = (url) => {
   const videoId = getYouTubeVideoId(url);
   if (!videoId) return null;
-  // maxresdefault is the highest quality, falls back to others if not available
   return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 };
 
@@ -57,11 +57,9 @@ const PlaceholderThumbnail = ({ song }) => {
 
 export const SongCard = ({ song, onClick }) => {
   const [thumbnailError, setThumbnailError] = useState(false);
+  const { theme } = useTheme();
 
-  // Determine thumbnail source
   let thumbnailUrl = song?.thumbnail;
-
-  // If URL is YouTube and no custom thumbnail, generate YouTube thumbnail
   if (!thumbnailUrl && isYouTubeUrl(song?.url)) {
     thumbnailUrl = getYouTubeThumbnail(song?.url);
   }
@@ -69,11 +67,10 @@ export const SongCard = ({ song, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="group bg-gray-900 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:bg-gray-800 hover:shadow-2xl hover:shadow-red-500/20 transform hover:scale-105"
+      className={`group ${theme === 'dark' ? 'bg-gray-900 hover:bg-gray-800 hover:shadow-red-500/20' : 'bg-white hover:bg-gray-50 hover:shadow-red-300/30'} rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:scale-105`}
     >
       {/* Thumbnail Container */}
-      <div className="relative overflow-hidden bg-gray-800 aspect-video flex items-center justify-center">
-        {/* Display thumbnail as background or fallback */}
+      <div className={`relative overflow-hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'} aspect-video flex items-center justify-center`}>
         {thumbnailUrl && !thumbnailError ? (
           <img
             src={thumbnailUrl}
@@ -123,15 +120,15 @@ export const SongCard = ({ song, onClick }) => {
 
       {/* Content */}
       <div className="p-3">
-        <h3 className="truncate text-sm font-semibold text-white transition-colors group-hover:text-red-500">
+        <h3 className={`truncate text-sm font-semibold transition-colors group-hover:text-red-500 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
           {song?.title || "Untitled"}
         </h3>
 
-        <p className="mt-1 truncate text-xs text-gray-400">
+        <p className={`mt-1 truncate text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
           {song?.artist || "Unknown Artist"}
         </p>
 
-        <p className="mt-1 truncate text-xs text-gray-500">
+        <p className={`mt-1 truncate text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
           {song?.album || "Unknown Album"}
         </p>
       </div>
