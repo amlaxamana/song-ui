@@ -7,10 +7,13 @@ export default defineConfig({
     port: 5173,
     open: true,
     proxy: {
-      '/laxamana/songs': {
+      //modify
+      '/laxamana': {
         target: 'https://song-api-6fpu.onrender.com',
         changeOrigin: true,
         secure: true,
+        //add
+        rewrite: (path) => path.replace(/^\/laxamana/, ''),
       },
     },
   },

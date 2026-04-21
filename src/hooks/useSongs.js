@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = '/laxamana/songs';
+//const API_BASE_URL = '/laxamana/songs';
+const BASE = import.meta.env.VITE_API_URL || '/laxamana';
+const API_BASE_URL = `${BASE}/songs`;
 
 export const useSongs = (searchQuery = '') => {
   const [songs, setSongs] = useState([]);
